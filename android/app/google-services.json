@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "834758508964",
+    "project_id": "fic22-tiketing",
+    "storage_bucket": "fic22-tiketing.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834758508964:android:e8aa1447d8cb20deb98131",
+        "android_client_info": {
+          "package_name": "com.example.flutter_ayo_piknik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834758508964-4idrq77jm11toln33l3apaep00qsno35.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_ayo_piknik",
+            "certificate_hash": "1b7ca9b55c68945781fa86a9c8dd1543427938ad"
+          }
+        },
+        {
+          "client_id": "834758508964-sogsa2ep8075flptj1hk3c24ucfdd59r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx9qhtL4Y6yXHmJ_-sa5SyQXTVsfk-2hU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834758508964-sogsa2ep8075flptj1hk3c24ucfdd59r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "834758508964-rguq690c463i5l8gqkvnrq32mnagqp6v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterAyoPiknik"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
