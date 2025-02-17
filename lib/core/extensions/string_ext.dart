@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 
 extension StringExt on String {
   int get toIntegerFromText {
@@ -7,12 +6,12 @@ extension StringExt on String {
     return parsedValue;
   }
 
-  String get currencyFormatRpV2 {
-    final parsedValue = int.tryParse(this) ?? 0;
-    return NumberFormat.currency(
-      locale: 'id',
-      symbol: 'Rp ',
-      decimalDigits: 0,
-    ).format(parsedValue);
-  }
+  // String get currencyFormatRpV2 {
+  //   final parsedValue = int.tryParse(this) ?? 0;
+  //   return NumberFormat.currency(
+  //     locale: 'id',
+  //     symbol: 'Rp ',
+  //     decimalDigits: 0,
+  //   ).format(parsedValue);
+  // }
 }

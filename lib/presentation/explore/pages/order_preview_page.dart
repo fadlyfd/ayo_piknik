@@ -1,15 +1,20 @@
+import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
+import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
+import 'package:flutter_ayo_piknik/data/models/requests/create_order_request_model.dart';
+import 'package:flutter_ayo_piknik/presentation/explore/blocs/create_order/create_order_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/components/buttons.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
-
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/dialogs/payment_dialog.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/destination_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/models/payment_option.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/data_customer_page.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/payment_page.dart';
@@ -17,10 +22,16 @@ import 'package:flutter_ayo_piknik/presentation/explore/widgets/card_ticket_prev
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/dashedline.dart';
 
 class OrderPreviewPage extends StatefulWidget {
-  final DestinationModel destination;
+  final CreateOrderRequestModel model;
+  final EventModel event;
+  final TicketModel ticket;
+  final int total;
   const OrderPreviewPage({
     super.key,
-    required this.destination,
+    required this.event,
+    required this.ticket,
+    required this.model,
+    required this.total,
   });
 
   @override
@@ -29,7 +40,7 @@ class OrderPreviewPage extends StatefulWidget {
 
 class _OrderPreviewPageState extends State<OrderPreviewPage> {
   PaymentOption? selectedPaymentOption;
-  bool isDisable = true;
+  bool isDisable = false;
   void showPaymentMethodSheet(BuildContext context) async {
     final result = await showModalBottomSheet<PaymentOption>(
       context: context,
@@ -67,7 +78,7 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              showPaymentMethodSheet(context);
+              // showPaymentMethodSheet(context);
             },
             child: Container(
               height: 40,
@@ -265,7 +276,7 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
                               ),
                             ),
                             Text(
-                              '${widget.destination.ticktes[0].category}: 1',
+                              'Jumlah Ticket: ${widget.model.orderDetails!.length} ',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
@@ -274,9 +285,9 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
                             ),
                           ],
                         ),
-                        const Text(
-                          'Rp. 120.000',
-                          style: TextStyle(
+                        Text(
+                          widget.total!.currencyFormatRp,
+                          style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
                             color: AppColors.orange,
@@ -287,20 +298,43 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
                     const SpaceHeight(12),
                     const DashedLine(),
                     const SpaceHeight(28),
-                    Button.filled(
-                      color: isDisable ? AppColors.disable : AppColors.primary,
-                      label: "✦ Bayar Sekarang ✦",
-                      textColor: isDisable
-                          ? AppColors.white.withOpacity(0.5)
-                          : AppColors.white,
-                      onPressed: () {
-                        if (selectedPaymentOption != null) {
-                          context.push(
-                            PaymentPage(
-                              payment: selectedPaymentOption!,
-                            ),
+                    BlocConsumer<CreateOrderBloc, CreateOrderState>(
+                      listener: (context, state) {
+                        state.maybeWhen(
+                          orElse: () {},
+                          error: (error) {
+                            context.showSnackBar(error, AppColors.red);
+                          },
+                          success: (data) {
+                            context.push(
+                              PaymentPage(
+                                data: data,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      builder: (context, state) {
+                        return state.maybeWhen(orElse: () {
+                          return Button.filled(
+                            color: isDisable
+                                ? AppColors.disable
+                                : AppColors.primary,
+                            label: "✦ Bayar Sekarang ✦",
+                            textColor: isDisable
+                                ? AppColors.white.withOpacity(0.5)
+                                : AppColors.white,
+                            onPressed: () {
+                              context.read<CreateOrderBloc>().add(
+                                    CreateOrderEvent.create(
+                                      widget.model,
+                                    ),
+                                  );
+                            },
                           );
-                        }
+                        }, loading: () {
+                          return const LoadingIndicator();
+                        });
                       },
                     ),
                   ],
@@ -318,7 +352,8 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
                 color: AppColors.primary,
               ),
               child: CardTicketPreview(
-                destination: widget.destination,
+                event: widget.event,
+                ticket: widget.ticket,
               ),
             ),
             _item(
@@ -371,7 +406,7 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
                 ),
                 children: [
                   Text(
-                    widget.destination.location,
+                    widget.event.vendor!.location!,
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(

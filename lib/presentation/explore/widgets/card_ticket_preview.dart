@@ -1,16 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 
+import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
+import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
+import 'package:flutter_ayo_piknik/core/constants/variabels.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/destination_model.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 
 class CardTicketPreview extends StatelessWidget {
-  final DestinationModel destination;
+  final EventModel event;
+  final TicketModel ticket;
   const CardTicketPreview({
     super.key,
-    required this.destination,
+    required this.event,
+    required this.ticket,
   });
 
   @override
@@ -29,12 +33,19 @@ class CardTicketPreview extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    destination.image,
-                    width: 65.0,
-                    height: 65.0,
-                    fit: BoxFit.cover,
-                  ),
+                  child: event.image!.contains('events')
+                      ? Image.asset(
+                          Assets.images.adventure.path,
+                          width: 65.0,
+                          height: 65.0,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          '${Variables.imageStorage}/${event.image}',
+                          width: 65.0,
+                          height: 65.0,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 const SpaceWidth(10),
                 Expanded(
@@ -42,7 +53,7 @@ class CardTicketPreview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        destination.name,
+                        event.name!,
                         style: const TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w600,
@@ -50,7 +61,7 @@ class CardTicketPreview extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${destination.ticktes[0].category}: 1",
+                        "${ticket.sku!.name}: 1",
                         style: const TextStyle(
                           fontSize: 16.0,
                           color: AppColors.grey,

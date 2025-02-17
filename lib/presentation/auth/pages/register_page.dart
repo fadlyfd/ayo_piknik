@@ -5,6 +5,10 @@ import 'package:flutter_ayo_piknik/core/components/custom_text_field.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
+import 'package:flutter_ayo_piknik/data/models/requests/register_request_model.dart';
+import 'package:flutter_ayo_piknik/presentation/auth/blocs/register/register_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,6 +18,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController? nameController;
   TextEditingController? emailController;
   TextEditingController? passwordController;
   TextEditingController? confirmPasswordController;
@@ -21,6 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool showPasswordConfrim = false;
   @override
   void initState() {
+    nameController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
@@ -29,6 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
+    nameController?.dispose();
     emailController?.dispose();
     passwordController?.dispose();
     confirmPasswordController?.dispose();
@@ -91,6 +98,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SpaceHeight(32),
+                CustomTextField(
+                  prefixIcon: const Icon(
+                    Icons.person,
+                    color: Color(0xff899CC9),
+                    size: 16,
+                  ),
+                  controller: nameController!,
+                  label: 'Name',
+                  showLabel: true,
+                ),
+                const SpaceHeight(16),
                 CustomTextField(
                   prefixIcon: const Icon(
                     Icons.email_outlined,
@@ -186,10 +204,39 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
                 const SpaceHeight(32),
-                Button.filled(
-                  height: 48,
-                  onPressed: () {},
-                  label: 'Login',
+                BlocConsumer<RegisterBloc, RegisterState>(
+                  listener: (context, state) {
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: (message) {
+                          context.showSnackBar(message, AppColors.red);
+                        },
+                        loaded: (message) {
+                          context.showSnackBar(message, AppColors.primary);
+                          context.pop();
+                        });
+                  },
+                  builder: (context, state) {
+                    return state.maybeWhen(orElse: () {
+                      return Button.filled(
+                        height: 48,
+                        onPressed: () {
+                          final model = RegisterRequestModel(
+                            name: nameController!.text,
+                            email: emailController!.text,
+                            password: passwordController!.text,
+                            confirmPassword: confirmPasswordController!.text,
+                          );
+                          context.read<RegisterBloc>().add(
+                                RegisterEvent.register(model),
+                              );
+                        },
+                        label: 'Register',
+                      );
+                    }, loading: () {
+                      return const LoadingIndicator();
+                    });
+                  },
                 ),
                 const SpaceHeight(16),
                 const Row(

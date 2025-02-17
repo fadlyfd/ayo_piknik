@@ -47,6 +47,10 @@ dependencies:
   shared_preferences: ^2.3.3
   timeline_calendar: ^1.0.2
   vector_graphics: any
+
+  mobile_scanner: ^6.0.5
+  webview_flutter: ^4.8.0
+
 dev_dependencies:
   build_runner: ^2.4.1
   flutter_gen_runner: ^5.8.0

@@ -75,7 +75,7 @@ class CustomTextField extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: prefixIcon,
               ),
               suffixIcon: suffixIcon,

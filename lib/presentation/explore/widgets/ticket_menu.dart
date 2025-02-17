@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
-import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/ticket_model.dart';
+import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
+import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 
 class TicketMenu extends StatelessWidget {
   final TicketModel ticketModel;
+  final int count;
+  final VoidCallback onIncrement;
+  final VoidCallback onDecrement;
   const TicketMenu({
     super.key,
     required this.ticketModel,
+    required this.count,
+    required this.onIncrement,
+    required this.onDecrement,
   });
 
   @override
@@ -22,7 +29,7 @@ class TicketMenu extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                ticketModel.title,
+                ticketModel.sku!.name!,
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,
@@ -31,7 +38,7 @@ class TicketMenu extends StatelessWidget {
               ),
               const SpaceHeight(4),
               Text(
-                ticketModel.category,
+                ticketModel.sku!.category!,
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,
@@ -42,7 +49,9 @@ class TicketMenu extends StatelessWidget {
               ),
               const SpaceHeight(16),
               Text(
-                ticketModel.price.currencyFormatRpV2,
+                FormatPrice()
+                    .formatPrice(ticketModel.sku!.price!)
+                    .currencyFormatRp,
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -58,37 +67,40 @@ class TicketMenu extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 24,
-                width: 24,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(
-                      0xffE7EAED,
+              GestureDetector(
+                onTap: onDecrement,
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color(
+                        0xffE7EAED,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      4,
                     ),
                   ),
-                  borderRadius: BorderRadius.circular(
-                    4,
-                  ),
-                ),
-                child: Center(
-                  child: Container(
-                    height: 2,
-                    width: 12,
-                    decoration: BoxDecoration(
-                      color: const Color(
-                        0xff3949AB,
-                      ),
-                      borderRadius: BorderRadius.circular(
-                        4,
+                  child: Center(
+                    child: Container(
+                      height: 2,
+                      width: 12,
+                      decoration: BoxDecoration(
+                        color: const Color(
+                          0xff3949AB,
+                        ),
+                        borderRadius: BorderRadius.circular(
+                          4,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              const Text(
-                "1",
-                style: TextStyle(
+              Text(
+                count.toString(),
+                style: const TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
                   color: Color(
@@ -96,24 +108,27 @@ class TicketMenu extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                height: 24,
-                width: 24,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(
-                      0xffE7EAED,
+              GestureDetector(
+                onTap: onIncrement,
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color(
+                        0xffE7EAED,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      4,
                     ),
                   ),
-                  borderRadius: BorderRadius.circular(
-                    4,
-                  ),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.add,
-                    color: Color(
-                      0xff3949AB,
+                  child: const Center(
+                    child: Icon(
+                      Icons.add,
+                      color: Color(
+                        0xff3949AB,
+                      ),
                     ),
                   ),
                 ),

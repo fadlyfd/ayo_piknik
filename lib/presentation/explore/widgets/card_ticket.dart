@@ -5,17 +5,17 @@ import 'package:flutter_ayo_piknik/core/components/buttons.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
-import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/destination_model.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/ticket_model.dart';
+import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
+import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/destination_order_page.dart';
 
 class CardTicket extends StatelessWidget {
-  final DestinationModel destination;
+  final EventModel event;
   final TicketModel ticket;
   const CardTicket({
     super.key,
-    required this.destination,
+    required this.event,
     required this.ticket,
   });
 
@@ -34,7 +34,7 @@ class CardTicket extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            ticket.title,
+            ticket.sku!.name!,
             style: const TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
@@ -63,7 +63,9 @@ class CardTicket extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    ticket.price.currencyFormatRpV2,
+                    FormatPrice()
+                        .formatPrice(ticket.sku!.price!)
+                        .currencyFormatRp,
                     style: const TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationColor: AppColors.disable,
@@ -73,7 +75,9 @@ class CardTicket extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    ticket.priceDiscount.currencyFormatRpV2,
+                    FormatPrice()
+                        .formatPrice(ticket.sku!.price!)
+                        .currencyFormatRp,
                     style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
@@ -89,8 +93,8 @@ class CardTicket extends StatelessWidget {
                   borderRadius: 8,
                   onPressed: () {
                     context.push(DestinationOrder(
-                      destination: destination,
-                      ticket: ticket.title,
+                      event: event,
+                      ticket: ticket,
                     ));
                   },
                   label: 'Pilih',

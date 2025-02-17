@@ -42,6 +42,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/culture.svg
   SvgGenImage get culture => const SvgGenImage('assets/icons/culture.svg');
 
+  /// File path: assets/icons/event-management.png
+  AssetGenImage get eventManagement =>
+      const AssetGenImage('assets/icons/event-management.png');
+
   /// File path: assets/icons/explore.svg
   SvgGenImage get explore => const SvgGenImage('assets/icons/explore.svg');
 
@@ -87,6 +91,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icons/profile.svg');
 
+  /// File path: assets/icons/repeat-circle.png
+  AssetGenImage get repeatCircle =>
+      const AssetGenImage('assets/icons/repeat-circle.png');
+
   /// File path: assets/icons/save.svg
   SvgGenImage get save => const SvgGenImage('assets/icons/save.svg');
 
@@ -95,6 +103,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/task.png
   AssetGenImage get task => const AssetGenImage('assets/icons/task.png');
+
+  /// File path: assets/icons/ticket-expired.png
+  AssetGenImage get ticketExpired =>
+      const AssetGenImage('assets/icons/ticket-expired.png');
 
   /// File path: assets/icons/ticket-icon.png
   AssetGenImage get ticketIcon =>
@@ -121,6 +133,7 @@ class $AssetsIconsGen {
         clipboardText,
         copy,
         culture,
+        eventManagement,
         explore,
         games,
         imageUpload,
@@ -134,9 +147,11 @@ class $AssetsIconsGen {
         profileCircle,
         profilePartner,
         profile,
+        repeatCircle,
         save,
         scan,
         task,
+        ticketExpired,
         ticketIcon,
         ticket,
         transactionPartner,
@@ -220,12 +235,20 @@ class $AssetsImagesGen {
   AssetGenImage get paymentSuccess =>
       const AssetGenImage('assets/images/payment_success.png');
 
+  /// File path: assets/images/payment_webview.png
+  AssetGenImage get paymentWebview =>
+      const AssetGenImage('assets/images/payment_webview.png');
+
   /// File path: assets/images/profile-image.png
   AssetGenImage get profileImage =>
       const AssetGenImage('assets/images/profile-image.png');
 
   /// File path: assets/images/qr-code.png
   AssetGenImage get qrCode => const AssetGenImage('assets/images/qr-code.png');
+
+  /// File path: assets/images/status-account.png
+  AssetGenImage get statusAccount =>
+      const AssetGenImage('assets/images/status-account.png');
 
   /// File path: assets/images/water_splash.png
   AssetGenImage get waterSplash =>
@@ -253,8 +276,10 @@ class $AssetsImagesGen {
         orderConfrimed,
         orderFailed,
         paymentSuccess,
+        paymentWebview,
         profileImage,
         qrCode,
+        statusAccount,
         waterSplash
       ];
 }

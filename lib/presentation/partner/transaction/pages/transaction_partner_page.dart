@@ -3,102 +3,53 @@ import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/widgets/card_destination.dart';
+import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
+import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
+import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
+import 'package:flutter_ayo_piknik/data/datasources/auth_local_datasource.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/login_response_model.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/home/pages/dashboard_partner_page.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/transaction/blocs/get_orders_vendor/get_orders_vendor_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/transaction/blocs/get_total_orders_vendor/get_total_orders_vendor_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/transaction/widgets/card_transaction_partner.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/transaction/widgets/empty_transaction_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../explore/models/ticket_model.dart';
-
-class TransactionPartnerPage extends StatelessWidget {
+class TransactionPartnerPage extends StatefulWidget {
   const TransactionPartnerPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List<TicketModel> ticketList = [
-      TicketModel(
-        title: "Taman Mini Indonesia Indah",
-        category: "Budaya",
-        price: "50000",
-        priceDiscount: "45000",
-        isSuccess: true,
-      ),
-      TicketModel(
-        title: "Ancol Dreamland",
-        category: "Taman Hiburan",
-        price: "150000",
-        priceDiscount: "130000",
-        isSuccess: false,
-      ),
-      TicketModel(
-        title: "Candi Borobudur",
-        category: "Sejarah",
-        price: "50000",
-        priceDiscount: "40000",
-        isSuccess: true,
-      ),
-      TicketModel(
-        title: "Kawah Putih Ciwidey",
-        category: "Alam",
-        price: "25000",
-        priceDiscount: "20000",
-        isSuccess: true,
-      ),
-      TicketModel(
-        title: "Gunung Bromo",
-        category: "Pendakian",
-        price: "35000",
-        priceDiscount: "30000",
-        isSuccess: true,
-      ),
-      TicketModel(
-        title: "Taman Nasional Komodo",
-        category: "Alam",
-        price: "200000",
-        priceDiscount: "180000",
-        isSuccess: false,
-      ),
-      TicketModel(
-        title: "Pantai Kuta",
-        category: "Pantai",
-        price: "10000",
-        priceDiscount: "5000",
-        isSuccess: false,
-      ),
-      TicketModel(
-        title: "Danau Toba",
-        category: "Alam",
-        price: "25000",
-        priceDiscount: "20000",
-        isSuccess: false,
-      ),
-      TicketModel(
-        title: "Tana Toraja",
-        category: "Budaya",
-        price: "40000",
-        priceDiscount: "35000",
-        isSuccess: false,
-      ),
-      TicketModel(
-        title: "Labuan Bajo",
-        category: "Snorkeling",
-        price: "300000",
-        priceDiscount: "270000",
-        isSuccess: false,
-      ),
-      TicketModel(
-        title: "Taman Safari Indonesia",
-        isSuccess: false,
-        category: "Hewan",
-        price: "200000",
-        priceDiscount: "180000",
-      ),
-    ];
+  State<TransactionPartnerPage> createState() => _TransactionPartnerPageState();
+}
 
+class _TransactionPartnerPageState extends State<TransactionPartnerPage> {
+  LoginResponseModel? loginResponseModel;
+  loadData() async {
+    loginResponseModel = await AuthLocalDatasource().getAuthData();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    loadData();
+    context
+        .read<GetOrdersVendorBloc>()
+        .add(const GetOrdersVendorEvent.getOrders());
+    context
+        .read<GetTotalOrdersVendorBloc>()
+        .add(const GetTotalOrdersVendorEvent.getTotalOrders());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: ListView(
         children: [
-          SpaceHeight(20),
+          const SpaceHeight(20),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
                 ClipRRect(
@@ -110,11 +61,11 @@ class TransactionPartnerPage extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SpaceWidth(16),
+                const SpaceWidth(16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Selamat Datang",
                       style: TextStyle(
                         fontSize: 14.0,
@@ -122,8 +73,8 @@ class TransactionPartnerPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Wisata Bahari ID",
-                      style: TextStyle(
+                      loginResponseModel?.data!.user?.name ?? "",
+                      style: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
                         color: AppColors.primary,
@@ -131,19 +82,19 @@ class TransactionPartnerPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Image.asset(
                   Assets.icons.ticketIcon.path,
                   width: 24.0,
                   height: 24.0,
                   fit: BoxFit.cover,
                 ),
-                SpaceWidth(4),
+                const SpaceWidth(4),
                 GestureDetector(
                   onTap: () {
-                    // context.push(TicketPartnerPage());
+                    context.push(const DashboardPartnerPage());
                   },
-                  child: Text(
+                  child: const Text(
                     "E-tiket",
                     style: TextStyle(
                       fontSize: 14.0,
@@ -154,7 +105,7 @@ class TransactionPartnerPage extends StatelessWidget {
               ],
             ),
           ),
-          SpaceHeight(8),
+          const SpaceHeight(8),
           Container(
             margin: const EdgeInsets.all(20.0),
             padding: const EdgeInsets.all(20.0),
@@ -183,26 +134,41 @@ class TransactionPartnerPage extends StatelessWidget {
                     color: AppColors.white.withOpacity(0.72),
                   ),
                 ),
-                Text(
-                  "Rp. 1.600.000",
-                  style: TextStyle(
-                    fontSize: 34.0,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.white,
-                  ),
+                BlocBuilder<GetTotalOrdersVendorBloc,
+                    GetTotalOrdersVendorState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                      orElse: () {
+                        return const SizedBox.shrink();
+                      },
+                      loading: () {
+                        return const LoadingIndicator();
+                      },
+                      success: (totalOrder) {
+                        return Text(
+                          totalOrder.toIntegerFromText.currencyFormatRp,
+                          style: const TextStyle(
+                            fontSize: 34.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ],
             ),
           ),
-          SpaceHeight(32),
-          Divider(
+          const SpaceHeight(32),
+          const Divider(
             color: AppColors.lightBackground,
             thickness: 5,
           ),
-          SpaceHeight(16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: const Row(
+          const SpaceHeight(16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
               children: [
                 Expanded(
                   child: Divider(
@@ -228,17 +194,34 @@ class TransactionPartnerPage extends StatelessWidget {
               ],
             ),
           ),
-          SpaceHeight(16),
-          // ticketList.isEmpty
-          //     ? const EmptyTransactionWidget()
-          //     : ListView.builder(
-          //         itemCount: ticketList.length,
-          //         shrinkWrap: true,
-          //         physics: const NeverScrollableScrollPhysics(),
-          //         itemBuilder: (BuildContext context, int index) {
-          //           return CardTransactionPartner(ticket: ticketList[index]);
-          //         },
-          //       ),
+          const SpaceHeight(16),
+          BlocBuilder<GetOrdersVendorBloc, GetOrdersVendorState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () {
+                  return const SizedBox.shrink();
+                },
+                loading: () {
+                  return const LoadingIndicator();
+                },
+                success: (data) {
+                  if (data.data!.isEmpty) {
+                    return const EmptyTransactionWidget();
+                  }
+                  return ListView.builder(
+                    itemCount: data.data!.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return CardTransactionPartner(
+                        order: data.data![index],
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );

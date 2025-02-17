@@ -1,23 +1,34 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 
 import 'package:flutter_ayo_piknik/core/components/buttons.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
+import 'package:flutter_ayo_piknik/core/constants/variabels.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/destination_model.dart';
+import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
+import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
+import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
+import 'package:flutter_ayo_piknik/data/models/requests/create_order_request_model.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/order_preview_page.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/calender_item_widget.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/dashedline.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/ticket_menu.dart';
 
 class DestinationOrder extends StatefulWidget {
-  final String ticket;
-  final DestinationModel destination;
+  final EventModel event;
+  final TicketModel ticket;
+
+  // final DestinationModel destination;
   const DestinationOrder({
     super.key,
+    required this.event,
     required this.ticket,
-    required this.destination,
   });
 
   @override
@@ -26,13 +37,67 @@ class DestinationOrder extends StatefulWidget {
 
 class _DestinationOrderState extends State<DestinationOrder> {
   final DateTime today = DateTime.now();
-
+  final Map<int, int> skuIdCount = {};
   late List<DateTime> dates;
   int activeIndex = 1;
+  late DateTime selectedDate;
+  int totalPrice = 0;
   @override
   void initState() {
     super.initState();
     dates = List.generate(7, (index) => today.add(Duration(days: index)));
+    selectedDate = dates[activeIndex];
+    for (var ticket in widget.event.tickets!) {
+      skuIdCount[ticket.skuId!] = 0;
+    }
+  }
+
+  void updateTicketCount(int skuId, int delta) {
+    setState(() {
+      final currentCount = skuIdCount[skuId] ?? 0;
+      skuIdCount[skuId] = (currentCount + delta).clamp(0, 100);
+    });
+    totalPrice = skuIdCount.entries.fold(
+      0,
+      (sum, entry) {
+        final ticket =
+            widget.event.tickets!.firstWhere((t) => t.skuId == entry.key);
+        return sum +
+            (entry.value * FormatPrice().formatPrice(ticket.sku!.price!))
+                .toInt();
+      },
+    );
+  }
+
+  void proceedToOrderPreview() {
+    final selectedDate = dates[activeIndex];
+    final List<OrderDetail> orderDetails = [];
+
+    skuIdCount.forEach((skuId, count) {
+      if (count > 0) {
+        orderDetails.add(OrderDetail(skuId: skuId, qty: count));
+        log("SKU ID: $skuId, Quantity: $count");
+      }
+    });
+
+    final totalSku = skuIdCount.values.fold(0, (sum, count) => sum + count);
+
+    final createOrderRequest = CreateOrderRequestModel(
+      orderDetails: orderDetails,
+      eventId: widget.event.id,
+      quantity: totalSku,
+      eventDate: selectedDate,
+    );
+    setState(() {});
+
+    context.push(
+      OrderPreviewPage(
+        event: widget.event,
+        ticket: widget.ticket,
+        model: createOrderRequest,
+        total: totalPrice,
+      ),
+    );
   }
 
   @override
@@ -79,10 +144,10 @@ class _DestinationOrderState extends State<DestinationOrder> {
         ),
         child: Column(
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -104,8 +169,8 @@ class _DestinationOrderState extends State<DestinationOrder> {
                   ],
                 ),
                 Text(
-                  'Rp. 120.000',
-                  style: TextStyle(
+                  totalPrice.currencyFormatRp,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                     color: AppColors.orange,
@@ -118,11 +183,7 @@ class _DestinationOrderState extends State<DestinationOrder> {
             const SpaceHeight(28),
             Button.filled(
               label: "✦ Pesan Sekarang ✦",
-              onPressed: () {
-                context.push(OrderPreviewPage(
-                  destination: widget.destination,
-                ));
-              },
+              onPressed: proceedToOrderPreview,
             ),
           ],
         ),
@@ -145,19 +206,26 @@ class _DestinationOrderState extends State<DestinationOrder> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    widget.destination.image,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                  ),
+                  child: widget.event.image!.contains('events')
+                      ? Image.asset(
+                          Assets.images.adventure.path,
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          '${Variables.imageStorage}/${widget.event.image}',
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 const SpaceWidth(
                   20,
                 ),
                 Expanded(
                   child: Text(
-                    widget.ticket,
+                    widget.event.name!,
                     style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -192,7 +260,8 @@ class _DestinationOrderState extends State<DestinationOrder> {
                   isActive: activeIndex == index,
                   onTap: () {
                     setState(() {
-                      activeIndex = index; // Ubah indeks aktif
+                      activeIndex = index;
+                      selectedDate = dates[index];
                     });
                   },
                 );
@@ -245,7 +314,7 @@ class _DestinationOrderState extends State<DestinationOrder> {
             child: ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: widget.destination.ticktes.length,
+              itemCount: widget.event.tickets!.length,
               separatorBuilder: (BuildContext context, int index) {
                 return const SpaceHeight(
                   16,
@@ -253,7 +322,12 @@ class _DestinationOrderState extends State<DestinationOrder> {
               },
               itemBuilder: (BuildContext context, int index) {
                 return TicketMenu(
-                  ticketModel: widget.destination.ticktes[index],
+                  ticketModel: widget.event.tickets![index],
+                  count: skuIdCount[widget.event.tickets![index].skuId!] ?? 0,
+                  onIncrement: () =>
+                      updateTicketCount(widget.event.tickets![index].id!, 1),
+                  onDecrement: () =>
+                      updateTicketCount(widget.event.tickets![index].id!, -1),
                 );
               },
             ),

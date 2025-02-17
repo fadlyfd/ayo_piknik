@@ -6,14 +6,13 @@ import 'package:flutter_ayo_piknik/core/components/buttons.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
-// import 'package:flutter_ayo_piknik/presentation/explore/pages/detail_destination_page.dart';
 
 class TicketStatusPage extends StatelessWidget {
   final bool isSuccess;
   const TicketStatusPage({
-    Key? key,
+    super.key,
     required this.isSuccess,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,29 +53,29 @@ class TicketStatusPage extends StatelessWidget {
               width: 200.0,
               fit: BoxFit.cover,
             ),
-            SpaceHeight(16),
+            const SpaceHeight(16),
             Text(
               isSuccess
                   ? "Tiket berhasil diverifikasi:"
                   : "Tiket gagal diverifikasi:",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textBlack2,
               ),
             ),
-            SpaceHeight(16),
+            const SpaceHeight(16),
             Text(
               isSuccess
                   ? "Tiket sudah terverifikasi dengan sukses. Pengunjung kini dapat melanjutkan tanpa hambatan dan menikmati pengalaman mereka dengan lancar."
                   : "Verifikasi gagal. Pastikan tiket yang Anda scan sudah benar dan coba lagi.",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14.0,
                 color: AppColors.grey,
               ),
               textAlign: TextAlign.center,
             ),
-            SpaceHeight(16),
+            const SpaceHeight(16),
             Button.filled(
               height: 48,
               color: isSuccess ? AppColors.primary : AppColors.red,

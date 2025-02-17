@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 
 class CustomTab extends StatelessWidget {
   final String iconPath;
@@ -26,9 +28,8 @@ class CustomTab extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(
-          fontSize: 10.0, // Ganti dengan ukuran yang diinginkan
-        ),
+        style: const TextStyle(fontSize: 10.0, overflow: TextOverflow.ellipsis),
+        maxLines: 1,
       ),
     );
   }

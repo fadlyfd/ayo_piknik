@@ -3,6 +3,7 @@ import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/presentation/home/widgets/nav_item.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/transaction/pages/transaction_partner_page.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/profile_partner/pages/profile_partner_page.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomePartnerPage extends StatefulWidget {
@@ -16,8 +17,8 @@ class _HomePartnerPageState extends State<HomePartnerPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    TransactionPartnerPage(),
-    const Text('Profile'),
+    const TransactionPartnerPage(),
+    const ProfilePartnerPage()
   ];
 
   void _onItemTapped(int index) {
@@ -37,7 +38,7 @@ class _HomePartnerPageState extends State<HomePartnerPage> {
         onPressed: () {},
         child: SvgPicture.asset(
           Assets.icons.scan.path,
-          colorFilter: ColorFilter.mode(
+          colorFilter: const ColorFilter.mode(
             AppColors.white,
             BlendMode.srcIn,
           ),

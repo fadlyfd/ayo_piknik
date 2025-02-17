@@ -65,7 +65,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
           child: Container(
             width: context.deviceWidth,
             height: 100.0,
-            padding: const EdgeInsets.all(28.0),
+            padding: const EdgeInsets.all(12.0),
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
@@ -75,9 +75,14 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: imagePath != null
-                  ? Image.file(
-                      File(imagePath!),
-                      fit: BoxFit.cover,
+                  ? SizedBox(
+                      width: 160,
+                      child: Image.file(
+                        height: 80.0,
+                        width: 160,
+                        File(imagePath!),
+                        fit: BoxFit.contain,
+                      ),
                     )
                   : Image.asset(
                       Assets.icons.imageUpload.path,

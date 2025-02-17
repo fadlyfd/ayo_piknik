@@ -1,19 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
+import 'package:flutter_ayo_piknik/core/constants/variabels.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
 import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/destination_model.dart';
+import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/detail_destination_page.dart';
+import 'package:flutter_ayo_piknik/presentation/order/pages/transaction_success_page.dart';
 
 import '../../../core/constants/colors.dart';
 
 class CardDestination extends StatelessWidget {
-  final DestinationModel destination;
+  final EventModel event;
   const CardDestination({
     super.key,
-    required this.destination,
+    required this.event,
   });
 
   @override
@@ -22,7 +27,7 @@ class CardDestination extends StatelessWidget {
       onTap: () {
         context.push(
           DetailDestinationPage(
-            destination: destination,
+            event: event,
           ),
         );
       },
@@ -43,12 +48,19 @@ class CardDestination extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   ),
-                  child: Image.asset(
-                    destination.image,
-                    width: 160.0,
-                    height: 128.0,
-                    fit: BoxFit.cover,
-                  ),
+                  child: event.image!.contains('events')
+                      ? Image.asset(
+                          Assets.images.adventure.path,
+                          width: 160.0,
+                          height: 128.0,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          '${Variables.imageStorage}/${event.image}',
+                          width: 160.0,
+                          height: 128.0,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 const SpaceHeight(4),
                 Padding(
@@ -59,7 +71,7 @@ class CardDestination extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        destination.name,
+                        event.name!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: const TextStyle(
@@ -73,16 +85,16 @@ class CardDestination extends StatelessWidget {
                         text: TextSpan(
                           text: '',
                           style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
+                          children: const <TextSpan>[
                             TextSpan(
-                              text: destination.review,
-                              style: const TextStyle(
+                              text: '8.8/10',
+                              style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12.0,
                                 color: AppColors.primary,
                               ),
                             ),
-                            const TextSpan(
+                            TextSpan(
                               text: '(78)',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -96,7 +108,11 @@ class CardDestination extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        destination.priceDiscount.currencyFormatRpV2,
+                        event.tickets!.isNotEmpty
+                            ? FormatPrice()
+                                .formatPrice(event.tickets![0].sku!.price!)
+                                .currencyFormatRp
+                            : "-",
                         style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           decorationColor: AppColors.disable,
@@ -106,7 +122,11 @@ class CardDestination extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        destination.price.currencyFormatRpV2,
+                        event.tickets!.isNotEmpty
+                            ? FormatPrice()
+                                .formatPrice(event.tickets![0].sku!.price!)
+                                .currencyFormatRp
+                            : "-",
                         style: const TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,

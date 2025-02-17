@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ayo_piknik/core/constants/variabels.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
+import 'package:flutter_ayo_piknik/presentation/explore/widgets/card_ticket.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/item_widget.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/models/destination_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/calender_item_widget.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/widgets/card_ticket.dart';
 
 import '../../../core/assets/assets.gen.dart';
 
 class DetailDestinationPage extends StatefulWidget {
-  final DestinationModel destination;
+  final EventModel event;
   const DetailDestinationPage({
     super.key,
-    required this.destination,
+    required this.event,
   });
 
   @override
@@ -42,12 +43,19 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
         children: [
           Stack(
             children: [
-              Image.asset(
-                widget.destination.image,
-                width: context.deviceWidth,
-                height: 243.0,
-                fit: BoxFit.cover,
-              ),
+              widget.event.image!.contains('events')
+                  ? Image.asset(
+                      Assets.images.adventure.path,
+                      width: context.deviceWidth,
+                      height: 243.0,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network(
+                      '${Variables.imageStorage}/${widget.event.image}',
+                      width: context.deviceWidth,
+                      height: 243.0,
+                      fit: BoxFit.cover,
+                    ),
               Container(
                 height: 86,
                 width: context.deviceWidth,
@@ -91,7 +99,7 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.destination.name,
+                  widget.event.name!,
                   style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
@@ -100,17 +108,17 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
                 ),
                 const SpaceHeight(8),
                 RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                     children: [
                       TextSpan(
-                        text: widget.destination.review,
-                        style: const TextStyle(
+                        text: '8.8/10',
+                        style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 12.0,
                           color: AppColors.primary,
                         ),
                       ),
-                      const TextSpan(
+                      TextSpan(
                         text: ' (dari 78 review)',
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -134,7 +142,7 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
                     const SpaceWidth(8),
                     Expanded(
                       child: Text(
-                        widget.destination.location,
+                        widget.event.vendor!.location!,
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 12.0,
@@ -207,7 +215,7 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
           ),
           const SpaceHeight(24),
           ListView.separated(
-            itemCount: widget.destination.ticktes.length,
+            itemCount: widget.event.tickets!.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (BuildContext context, int index) {
@@ -217,8 +225,8 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
             },
             itemBuilder: (BuildContext context, int index) {
               return CardTicket(
-                ticket: widget.destination.ticktes[index],
-                destination: widget.destination,
+                event: widget.event,
+                ticket: widget.event.tickets![index],
               );
             },
           ),

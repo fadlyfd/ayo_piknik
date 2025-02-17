@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/components/buttons.dart';
@@ -6,11 +5,14 @@ import 'package:flutter_ayo_piknik/core/components/custom_text_field.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
+import 'package:flutter_ayo_piknik/data/datasources/auth_local_datasource.dart';
+import 'package:flutter_ayo_piknik/data/models/requests/login_request_model.dart';
+import 'package:flutter_ayo_piknik/presentation/auth/blocs/login/login_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/auth/pages/register_page.dart';
 import 'package:flutter_ayo_piknik/presentation/home/pages/home_page.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/home/pages/home_partner_page.dart';
-import 'package:flutter_ayo_piknik/presentation/home/pages/home_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,46 +30,6 @@ class _LoginPageState extends State<LoginPage> {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     super.initState();
-  }
-
-  Future<void> googleLogin(BuildContext context) async {
-    try {
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser!.authentication;
-
-      if (googleAuth.idToken != null) {
-        context.pushReplacement(HomePage());
-      } else {
-        final snackBar = SnackBar(
-          content: const Text('Google Sign In failed'),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-
-      // context.read<LoginGoogleBloc>().add(LoginGoogleEvent.loginGoogle(
-      //       googleAuth.idToken ?? '',
-      //     ));
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      // Sign in to Firebase with the Google credential
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      setState(() {});
-    } catch (e) {
-      final snackBar = SnackBar(
-        content: Text('$e'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
   }
 
   @override
@@ -199,12 +161,45 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   const SpaceHeight(32),
-                  Button.filled(
-                    height: 48,
-                    onPressed: () {
-                      context.push(const HomePage());
+                  BlocConsumer<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      state.maybeWhen(
+                        orElse: () {},
+                        loaded: (model) async {
+                          await AuthLocalDatasource().saveAuthData(model);
+                          if (model.data!.user!.isVendor == 1) {
+                            context.pushReplacement(const HomePartnerPage());
+                          } else {
+                            context.pushReplacement(const HomePage());
+                          }
+                        },
+                        error: (message) {
+                          context.showSnackBar(message, AppColors.red);
+                        },
+                      );
                     },
-                    label: 'Login',
+                    builder: (context, state) {
+                      return state.maybeWhen(orElse: () {
+                        return Button.filled(
+                          height: 48,
+                          onPressed: () {
+                            if (emailController!.text.isNotEmpty &&
+                                passwordController!.text.isNotEmpty) {
+                              final model = LoginRequestModel(
+                                email: emailController!.text,
+                                password: passwordController!.text,
+                              );
+                              context.read<LoginBloc>().add(
+                                    LoginEvent.login(model),
+                                  );
+                            }
+                          },
+                          label: 'Login',
+                        );
+                      }, loading: () {
+                        return const LoadingIndicator();
+                      });
+                    },
                   ),
                   const SpaceHeight(16),
                   const Row(
@@ -234,9 +229,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SpaceHeight(16),
                   OutlinedButton(
-                    onPressed: () async {
-                      // context.push(const HomePartnerPage());
-                      await googleLogin(context);
+                    onPressed: () {
+                      context.push(const HomePartnerPage());
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(

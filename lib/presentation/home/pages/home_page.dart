@@ -3,6 +3,10 @@ import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/explore_page.dart';
 import 'package:flutter_ayo_piknik/presentation/home/widgets/nav_item.dart';
+import 'package:flutter_ayo_piknik/presentation/profile/pages/profile_page.dart';
+import 'package:flutter_ayo_piknik/presentation/save/pages/save_order_page.dart';
+
+import '../../order/pages/orders_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,10 +19,10 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    ExplorePage(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
+    const ExplorePage(),
+    const OrdersPage(),
+    const SaveOrderPage(),
+    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
