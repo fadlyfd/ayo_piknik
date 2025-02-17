@@ -8,9 +8,9 @@ import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
 import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 
-class CardTicketPartner extends StatelessWidget {
-  final TicketModel model;
-  const CardTicketPartner({
+class CardSkuPartner extends StatelessWidget {
+  final SkuModel model;
+  const CardSkuPartner({
     super.key,
     required this.model,
   });
@@ -30,7 +30,7 @@ class CardTicketPartner extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            model.skuId.toString(),
+            model.id.toString(),
             style: const TextStyle(
               fontSize: 13.0,
               fontWeight: FontWeight.w400,
@@ -39,7 +39,7 @@ class CardTicketPartner extends StatelessWidget {
           ),
           const SpaceHeight(10),
           Text(
-            model.sku?.name ?? "-",
+            model.name ?? "-",
             style: const TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
@@ -56,9 +56,9 @@ class CardTicketPartner extends StatelessWidget {
           const SpaceHeight(10),
           Row(
             children: [
-              const Text(
-                "Kuota: 1",
-                style: TextStyle(
+              Text(
+                "Kuota: ${model.stock}",
+                style: const TextStyle(
                   fontSize: 12.0,
                   color: Color(0xff687176),
                 ),
@@ -72,7 +72,7 @@ class CardTicketPartner extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(
                       text: FormatPrice()
-                          .formatPrice(model.sku!.price!)
+                          .formatPrice(model.price!)
                           .currencyFormatRp,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,

@@ -3,8 +3,8 @@ import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 
-class EmptyTicketWidget extends StatelessWidget {
-  const EmptyTicketWidget({super.key});
+class EmptySkuWidget extends StatelessWidget {
+  const EmptySkuWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

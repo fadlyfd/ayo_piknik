@@ -4,7 +4,6 @@ import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
 import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
-import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
 import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/order_response_model.dart';
 

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_ticket_user_bloc.dart';
+part of 'get_skus_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,65 +15,65 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$GetTicketUserEvent {
+mixin _$GetSkusEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getTicketUser,
+    required TResult Function() getSkus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getTicketUser,
+    TResult? Function()? getSkus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getTicketUser,
+    TResult Function()? getSkus,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetTicketUser value) getTicketUser,
+    required TResult Function(_GetSkus value) getSkus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetTicketUser value)? getTicketUser,
+    TResult? Function(_GetSkus value)? getSkus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetTicketUser value)? getTicketUser,
+    TResult Function(_GetSkus value)? getSkus,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GetTicketUserEventCopyWith<$Res> {
-  factory $GetTicketUserEventCopyWith(
-          GetTicketUserEvent value, $Res Function(GetTicketUserEvent) then) =
-      _$GetTicketUserEventCopyWithImpl<$Res, GetTicketUserEvent>;
+abstract class $GetSkusEventCopyWith<$Res> {
+  factory $GetSkusEventCopyWith(
+          GetSkusEvent value, $Res Function(GetSkusEvent) then) =
+      _$GetSkusEventCopyWithImpl<$Res, GetSkusEvent>;
 }
 
 /// @nodoc
-class _$GetTicketUserEventCopyWithImpl<$Res, $Val extends GetTicketUserEvent>
-    implements $GetTicketUserEventCopyWith<$Res> {
-  _$GetTicketUserEventCopyWithImpl(this._value, this._then);
+class _$GetSkusEventCopyWithImpl<$Res, $Val extends GetSkusEvent>
+    implements $GetSkusEventCopyWith<$Res> {
+  _$GetSkusEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GetTicketUserEvent
+  /// Create a copy of GetSkusEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -86,13 +86,13 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$GetTicketUserEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$GetSkusEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetTicketUserEvent
+  /// Create a copy of GetSkusEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -103,7 +103,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'GetTicketUserEvent.started()';
+    return 'GetSkusEvent.started()';
   }
 
   @override
@@ -119,7 +119,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getTicketUser,
+    required TResult Function() getSkus,
   }) {
     return started();
   }
@@ -128,7 +128,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getTicketUser,
+    TResult? Function()? getSkus,
   }) {
     return started?.call();
   }
@@ -137,7 +137,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getTicketUser,
+    TResult Function()? getSkus,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -150,7 +150,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetTicketUser value) getTicketUser,
+    required TResult Function(_GetSkus value) getSkus,
   }) {
     return started(this);
   }
@@ -159,7 +159,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetTicketUser value)? getTicketUser,
+    TResult? Function(_GetSkus value)? getSkus,
   }) {
     return started?.call(this);
   }
@@ -168,7 +168,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetTicketUser value)? getTicketUser,
+    TResult Function(_GetSkus value)? getSkus,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -178,43 +178,43 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements GetTicketUserEvent {
+abstract class _Started implements GetSkusEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$GetTicketUserImplCopyWith<$Res> {
-  factory _$$GetTicketUserImplCopyWith(
-          _$GetTicketUserImpl value, $Res Function(_$GetTicketUserImpl) then) =
-      __$$GetTicketUserImplCopyWithImpl<$Res>;
+abstract class _$$GetSkusImplCopyWith<$Res> {
+  factory _$$GetSkusImplCopyWith(
+          _$GetSkusImpl value, $Res Function(_$GetSkusImpl) then) =
+      __$$GetSkusImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$GetTicketUserImplCopyWithImpl<$Res>
-    extends _$GetTicketUserEventCopyWithImpl<$Res, _$GetTicketUserImpl>
-    implements _$$GetTicketUserImplCopyWith<$Res> {
-  __$$GetTicketUserImplCopyWithImpl(
-      _$GetTicketUserImpl _value, $Res Function(_$GetTicketUserImpl) _then)
+class __$$GetSkusImplCopyWithImpl<$Res>
+    extends _$GetSkusEventCopyWithImpl<$Res, _$GetSkusImpl>
+    implements _$$GetSkusImplCopyWith<$Res> {
+  __$$GetSkusImplCopyWithImpl(
+      _$GetSkusImpl _value, $Res Function(_$GetSkusImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetTicketUserEvent
+  /// Create a copy of GetSkusEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$GetTicketUserImpl implements _GetTicketUser {
-  const _$GetTicketUserImpl();
+class _$GetSkusImpl implements _GetSkus {
+  const _$GetSkusImpl();
 
   @override
   String toString() {
-    return 'GetTicketUserEvent.getTicketUser()';
+    return 'GetSkusEvent.getSkus()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetTicketUserImpl);
+        (other.runtimeType == runtimeType && other is _$GetSkusImpl);
   }
 
   @override
@@ -224,29 +224,29 @@ class _$GetTicketUserImpl implements _GetTicketUser {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getTicketUser,
+    required TResult Function() getSkus,
   }) {
-    return getTicketUser();
+    return getSkus();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getTicketUser,
+    TResult? Function()? getSkus,
   }) {
-    return getTicketUser?.call();
+    return getSkus?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getTicketUser,
+    TResult Function()? getSkus,
     required TResult orElse(),
   }) {
-    if (getTicketUser != null) {
-      return getTicketUser();
+    if (getSkus != null) {
+      return getSkus();
     }
     return orElse();
   }
@@ -255,45 +255,45 @@ class _$GetTicketUserImpl implements _GetTicketUser {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetTicketUser value) getTicketUser,
+    required TResult Function(_GetSkus value) getSkus,
   }) {
-    return getTicketUser(this);
+    return getSkus(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetTicketUser value)? getTicketUser,
+    TResult? Function(_GetSkus value)? getSkus,
   }) {
-    return getTicketUser?.call(this);
+    return getSkus?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetTicketUser value)? getTicketUser,
+    TResult Function(_GetSkus value)? getSkus,
     required TResult orElse(),
   }) {
-    if (getTicketUser != null) {
-      return getTicketUser(this);
+    if (getSkus != null) {
+      return getSkus(this);
     }
     return orElse();
   }
 }
 
-abstract class _GetTicketUser implements GetTicketUserEvent {
-  const factory _GetTicketUser() = _$GetTicketUserImpl;
+abstract class _GetSkus implements GetSkusEvent {
+  const factory _GetSkus() = _$GetSkusImpl;
 }
 
 /// @nodoc
-mixin _$GetTicketUserState {
+mixin _$GetSkusState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(TicketResponseModel data) success,
+    required TResult Function(SkuResponseModel data) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -301,7 +301,7 @@ mixin _$GetTicketUserState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(TicketResponseModel data)? success,
+    TResult? Function(SkuResponseModel data)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -309,7 +309,7 @@ mixin _$GetTicketUserState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(TicketResponseModel data)? success,
+    TResult Function(SkuResponseModel data)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -318,7 +318,7 @@ mixin _$GetTicketUserState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_success value) success,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -326,7 +326,7 @@ mixin _$GetTicketUserState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_success value)? success,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -334,7 +334,7 @@ mixin _$GetTicketUserState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -342,23 +342,23 @@ mixin _$GetTicketUserState {
 }
 
 /// @nodoc
-abstract class $GetTicketUserStateCopyWith<$Res> {
-  factory $GetTicketUserStateCopyWith(
-          GetTicketUserState value, $Res Function(GetTicketUserState) then) =
-      _$GetTicketUserStateCopyWithImpl<$Res, GetTicketUserState>;
+abstract class $GetSkusStateCopyWith<$Res> {
+  factory $GetSkusStateCopyWith(
+          GetSkusState value, $Res Function(GetSkusState) then) =
+      _$GetSkusStateCopyWithImpl<$Res, GetSkusState>;
 }
 
 /// @nodoc
-class _$GetTicketUserStateCopyWithImpl<$Res, $Val extends GetTicketUserState>
-    implements $GetTicketUserStateCopyWith<$Res> {
-  _$GetTicketUserStateCopyWithImpl(this._value, this._then);
+class _$GetSkusStateCopyWithImpl<$Res, $Val extends GetSkusState>
+    implements $GetSkusStateCopyWith<$Res> {
+  _$GetSkusStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -371,13 +371,13 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$GetTicketUserStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$GetSkusStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -388,7 +388,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'GetTicketUserState.initial()';
+    return 'GetSkusState.initial()';
   }
 
   @override
@@ -405,7 +405,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(TicketResponseModel data) success,
+    required TResult Function(SkuResponseModel data) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -416,7 +416,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(TicketResponseModel data)? success,
+    TResult? Function(SkuResponseModel data)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -427,7 +427,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(TicketResponseModel data)? success,
+    TResult Function(SkuResponseModel data)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -442,7 +442,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_success value) success,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -453,7 +453,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -464,7 +464,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -475,7 +475,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements GetTicketUserState {
+abstract class _Initial implements GetSkusState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -488,13 +488,13 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$GetTicketUserStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$GetSkusStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -505,7 +505,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'GetTicketUserState.loading()';
+    return 'GetSkusState.loading()';
   }
 
   @override
@@ -522,7 +522,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(TicketResponseModel data) success,
+    required TResult Function(SkuResponseModel data) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -533,7 +533,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(TicketResponseModel data)? success,
+    TResult? Function(SkuResponseModel data)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -544,7 +544,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(TicketResponseModel data)? success,
+    TResult Function(SkuResponseModel data)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -559,7 +559,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_success value) success,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -570,7 +570,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -581,7 +581,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -592,81 +592,81 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements GetTicketUserState {
+abstract class _Loading implements GetSkusState {
   const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
-      __$$SuccessImplCopyWithImpl<$Res>;
+abstract class _$$successImplCopyWith<$Res> {
+  factory _$$successImplCopyWith(
+          _$successImpl value, $Res Function(_$successImpl) then) =
+      __$$successImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({TicketResponseModel data});
+  $Res call({SkuResponseModel data});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GetTicketUserStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+class __$$successImplCopyWithImpl<$Res>
+    extends _$GetSkusStateCopyWithImpl<$Res, _$successImpl>
+    implements _$$successImplCopyWith<$Res> {
+  __$$successImplCopyWithImpl(
+      _$successImpl _value, $Res Function(_$successImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? data = null,
   }) {
-    return _then(_$SuccessImpl(
+    return _then(_$successImpl(
       null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as TicketResponseModel,
+              as SkuResponseModel,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.data);
+class _$successImpl implements _success {
+  const _$successImpl(this.data);
 
   @override
-  final TicketResponseModel data;
+  final SkuResponseModel data;
 
   @override
   String toString() {
-    return 'GetTicketUserState.success(data: $data)';
+    return 'GetSkusState.success(data: $data)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
+            other is _$successImpl &&
             (identical(other.data, data) || other.data == data));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, data);
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$successImplCopyWith<_$successImpl> get copyWith =>
+      __$$successImplCopyWithImpl<_$successImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(TicketResponseModel data) success,
+    required TResult Function(SkuResponseModel data) success,
     required TResult Function(String message) error,
   }) {
     return success(data);
@@ -677,7 +677,7 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(TicketResponseModel data)? success,
+    TResult? Function(SkuResponseModel data)? success,
     TResult? Function(String message)? error,
   }) {
     return success?.call(data);
@@ -688,7 +688,7 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(TicketResponseModel data)? success,
+    TResult Function(SkuResponseModel data)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -703,7 +703,7 @@ class _$SuccessImpl implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_success value) success,
     required TResult Function(_Error value) error,
   }) {
     return success(this);
@@ -714,7 +714,7 @@ class _$SuccessImpl implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
@@ -725,7 +725,7 @@ class _$SuccessImpl implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -736,15 +736,15 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements GetTicketUserState {
-  const factory _Success(final TicketResponseModel data) = _$SuccessImpl;
+abstract class _success implements GetSkusState {
+  const factory _success(final SkuResponseModel data) = _$successImpl;
 
-  TicketResponseModel get data;
+  SkuResponseModel get data;
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+  _$$successImplCopyWith<_$successImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -759,13 +759,13 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$GetTicketUserStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$GetSkusStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -791,7 +791,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'GetTicketUserState.error(message: $message)';
+    return 'GetSkusState.error(message: $message)';
   }
 
   @override
@@ -805,7 +805,7 @@ class _$ErrorImpl implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -818,7 +818,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(TicketResponseModel data) success,
+    required TResult Function(SkuResponseModel data) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -829,7 +829,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(TicketResponseModel data)? success,
+    TResult? Function(SkuResponseModel data)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -840,7 +840,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(TicketResponseModel data)? success,
+    TResult Function(SkuResponseModel data)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -855,7 +855,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_success value) success,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -866,7 +866,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -877,7 +877,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -888,12 +888,12 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements GetTicketUserState {
+abstract class _Error implements GetSkusState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;
 
-  /// Create a copy of GetTicketUserState
+  /// Create a copy of GetSkusState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

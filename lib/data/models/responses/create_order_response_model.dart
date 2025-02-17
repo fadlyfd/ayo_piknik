@@ -1,7 +1,9 @@
+import 'package:flutter_ayo_piknik/data/models/responses/login_response_model.dart';
+
 class CreateOrderResponseModel {
   final String? status;
   final String? message;
-  final CreateOrderModel? data;
+  final CreateOrder? data;
 
   CreateOrderResponseModel({
     this.status,
@@ -13,9 +15,7 @@ class CreateOrderResponseModel {
       CreateOrderResponseModel(
         status: json["status"],
         message: json["message"],
-        data: json["data"] == null
-            ? null
-            : CreateOrderModel.fromJson(json["data"]),
+        data: json["data"] == null ? null : CreateOrder.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -25,39 +25,41 @@ class CreateOrderResponseModel {
       };
 }
 
-class CreateOrderModel {
+class CreateOrder {
   final int? userId;
   final int? eventId;
-  final int? quantity;
-  final int? total;
   final DateTime? eventDate;
-  final String? status;
+  final int? quantity;
+  final int? totalPrice;
   final DateTime? updatedAt;
   final DateTime? createdAt;
   final int? id;
+  final String? paymentUrl;
+  final UserModel? user;
+  final List<Map<String, int>>? orderItems;
 
-  CreateOrderModel({
+  CreateOrder({
     this.userId,
     this.eventId,
-    this.quantity,
-    this.total,
     this.eventDate,
-    this.status,
+    this.quantity,
+    this.totalPrice,
     this.updatedAt,
     this.createdAt,
     this.id,
+    this.paymentUrl,
+    this.user,
+    this.orderItems,
   });
 
-  factory CreateOrderModel.fromJson(Map<String, dynamic> json) =>
-      CreateOrderModel(
+  factory CreateOrder.fromJson(Map<String, dynamic> json) => CreateOrder(
         userId: json["user_id"],
         eventId: json["event_id"],
-        quantity: json["quantity"],
-        total: json["total"],
         eventDate: json["event_date"] == null
             ? null
             : DateTime.parse(json["event_date"]),
-        status: json["status"],
+        quantity: json["quantity"],
+        totalPrice: json["total_price"],
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
@@ -65,18 +67,29 @@ class CreateOrderModel {
             ? null
             : DateTime.parse(json["created_at"]),
         id: json["id"],
+        paymentUrl: json["payment_url"],
+        user: json["user"] == null ? null : UserModel.fromJson(json["user"]),
+        orderItems: json["orderItems"] == null
+            ? []
+            : List<Map<String, int>>.from(json["orderItems"]!.map(
+                (x) => Map.from(x).map((k, v) => MapEntry<String, int>(k, v)))),
       );
 
   Map<String, dynamic> toJson() => {
         "user_id": userId,
         "event_id": eventId,
-        "quantity": quantity,
-        "total": total,
         "event_date":
             "${eventDate!.year.toString().padLeft(4, '0')}-${eventDate!.month.toString().padLeft(2, '0')}-${eventDate!.day.toString().padLeft(2, '0')}",
-        "status": status,
+        "quantity": quantity,
+        "total_price": totalPrice,
         "updated_at": updatedAt?.toIso8601String(),
         "created_at": createdAt?.toIso8601String(),
         "id": id,
+        "payment_url": paymentUrl,
+        "user": user?.toJson(),
+        "orderItems": orderItems == null
+            ? []
+            : List<dynamic>.from(orderItems!.map((x) =>
+                Map.from(x).map((k, v) => MapEntry<String, dynamic>(k, v)))),
       };
 }

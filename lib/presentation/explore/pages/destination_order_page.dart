@@ -11,7 +11,6 @@ import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/constants/variabels.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
 import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
-import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
 import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
 import 'package:flutter_ayo_piknik/data/models/requests/create_order_request_model.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
@@ -22,7 +21,7 @@ import 'package:flutter_ayo_piknik/presentation/explore/widgets/ticket_menu.dart
 
 class DestinationOrder extends StatefulWidget {
   final EventModel event;
-  final TicketModel ticket;
+  final TicketEventModel ticket;
 
   // final DestinationModel destination;
   const DestinationOrder({
@@ -48,7 +47,7 @@ class _DestinationOrderState extends State<DestinationOrder> {
     dates = List.generate(7, (index) => today.add(Duration(days: index)));
     selectedDate = dates[activeIndex];
     for (var ticket in widget.event.tickets!) {
-      skuIdCount[ticket.skuId!] = 0;
+      skuIdCount[ticket.sku!.id!] = 0;
     }
   }
 
@@ -61,12 +60,13 @@ class _DestinationOrderState extends State<DestinationOrder> {
       0,
       (sum, entry) {
         final ticket =
-            widget.event.tickets!.firstWhere((t) => t.skuId == entry.key);
+            widget.event.tickets!.firstWhere((t) => t.sku!.id == entry.key);
         return sum +
             (entry.value * FormatPrice().formatPrice(ticket.sku!.price!))
                 .toInt();
       },
     );
+    log("SKU ID: $skuId, Quantity: ${skuIdCount[skuId]}");
   }
 
   void proceedToOrderPreview() {
@@ -214,7 +214,7 @@ class _DestinationOrderState extends State<DestinationOrder> {
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          '${Variables.imageStorage}/${widget.event.image}',
+                          '${Variables.imageStorage}/events/${widget.event.image}',
                           width: 60,
                           height: 60,
                           fit: BoxFit.cover,
@@ -323,11 +323,11 @@ class _DestinationOrderState extends State<DestinationOrder> {
               itemBuilder: (BuildContext context, int index) {
                 return TicketMenu(
                   ticketModel: widget.event.tickets![index],
-                  count: skuIdCount[widget.event.tickets![index].skuId!] ?? 0,
-                  onIncrement: () =>
-                      updateTicketCount(widget.event.tickets![index].id!, 1),
-                  onDecrement: () =>
-                      updateTicketCount(widget.event.tickets![index].id!, -1),
+                  count: skuIdCount[widget.event.tickets![index].sku!.id!] ?? 0,
+                  onIncrement: () => updateTicketCount(
+                      widget.event.tickets![index].sku!.id!, 1),
+                  onDecrement: () => updateTicketCount(
+                      widget.event.tickets![index].sku!.id!, -1),
                 );
               },
             ),

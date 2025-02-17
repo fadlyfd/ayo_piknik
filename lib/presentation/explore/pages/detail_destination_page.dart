@@ -51,7 +51,7 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
                       fit: BoxFit.cover,
                     )
                   : Image.network(
-                      '${Variables.imageStorage}/${widget.event.image}',
+                      '${Variables.imageStorage}/events/${widget.event.image}',
                       width: context.deviceWidth,
                       height: 243.0,
                       fit: BoxFit.cover,

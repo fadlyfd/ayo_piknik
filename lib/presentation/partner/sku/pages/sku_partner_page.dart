@@ -3,26 +3,24 @@ import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
-import 'package:flutter_ayo_piknik/presentation/partner/ticket/blocs/get_ticket_user/get_ticket_user_bloc.dart';
-import 'package:flutter_ayo_piknik/presentation/partner/ticket/pages/add_ticket_page.dart';
-import 'package:flutter_ayo_piknik/presentation/partner/ticket/widgets/card_ticket_partner.dart';
-import 'package:flutter_ayo_piknik/presentation/partner/ticket/widgets/empty_ticket_widget.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/blocs/get_skus/get_skus_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/pages/add_sku_page.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/widgets/card_sku_partner.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/widgets/empty_sku_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TicketPartnerPage extends StatefulWidget {
-  const TicketPartnerPage({super.key});
+class SkuPartnerPage extends StatefulWidget {
+  const SkuPartnerPage({super.key});
 
   @override
-  State<TicketPartnerPage> createState() => _TicketPartnerPageState();
+  State<SkuPartnerPage> createState() => _SkuPartnerPageState();
 }
 
-class _TicketPartnerPageState extends State<TicketPartnerPage> {
+class _SkuPartnerPageState extends State<SkuPartnerPage> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<GetTicketUserBloc>()
-        .add(const GetTicketUserEvent.getTicketUser());
+    context.read<GetSkusBloc>().add(const GetSkusEvent.getSkus());
   }
 
   @override
@@ -50,7 +48,7 @@ class _TicketPartnerPageState extends State<TicketPartnerPage> {
         actions: [
           GestureDetector(
             onTap: () {
-              context.push(const AddTicketPage());
+              context.push(const AddSkuPage());
             },
             child: Container(
               height: 24,
@@ -70,7 +68,7 @@ class _TicketPartnerPageState extends State<TicketPartnerPage> {
           const SpaceWidth(16)
         ],
       ),
-      body: BlocBuilder<GetTicketUserBloc, GetTicketUserState>(
+      body: BlocBuilder<GetSkusBloc, GetSkusState>(
         builder: (context, state) {
           return state.maybeWhen(orElse: () {
             return const SizedBox.shrink();
@@ -78,7 +76,7 @@ class _TicketPartnerPageState extends State<TicketPartnerPage> {
             return const LoadingIndicator();
           }, success: (data) {
             if (data.data!.isEmpty) {
-              return const EmptyTicketWidget();
+              return const EmptySkuWidget();
             }
 
             return ListView.separated(
@@ -87,7 +85,7 @@ class _TicketPartnerPageState extends State<TicketPartnerPage> {
                 return const SpaceHeight(2);
               },
               itemBuilder: (BuildContext context, int index) {
-                return CardTicketPartner(
+                return CardSkuPartner(
                   model: data.data![index],
                 );
               },

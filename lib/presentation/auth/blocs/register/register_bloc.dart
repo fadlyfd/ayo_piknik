@@ -1,3 +1,4 @@
+
 import 'package:flutter_ayo_piknik/data/datasources/auth_remote_datasource.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ayo_piknik/data/models/requests/register_request_model.dart';
@@ -11,7 +12,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthRemoteDatasource datasource;
 
   RegisterBloc(this.datasource) : super(const RegisterState.initial()) {
-    /*  on<_Register>((event, emit) async {
+    on<_Register>((event, emit) async {
       emit(const _Loading());
 
       final result = await datasource.register(event.model);
@@ -20,28 +21,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         (l) => emit(_Error(l)),
         (r) => emit(_Loaded(r)),
       );
-    }); */
-    on<_Register>((event, emit) async {
-      emit(const _Loading());
-
-      try {
-        final result = await datasource.register(event.model);
-
-        result.fold(
-          (l) {
-            print('Error: $l');
-            emit(_Error(l));
-          },
-          (r) {
-            print('Success: $r');
-            emit(_Loaded(r));
-          },
-        );
-      } catch (e, stacktrace) {
-        print('Exception: $e');
-        print('Stacktrace: $stacktrace');
-        emit(_Error(e.toString()));
-      }
     });
   }
 }

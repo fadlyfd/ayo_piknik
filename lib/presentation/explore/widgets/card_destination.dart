@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 
@@ -6,11 +8,9 @@ import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/variabels.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
 import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
-import 'package:flutter_ayo_piknik/core/extensions/string_ext.dart';
 import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/detail_destination_page.dart';
-import 'package:flutter_ayo_piknik/presentation/order/pages/transaction_success_page.dart';
 
 import '../../../core/constants/colors.dart';
 
@@ -25,6 +25,7 @@ class CardDestination extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        log("Context push DetailDestinationPage");
         context.push(
           DetailDestinationPage(
             event: event,
@@ -56,7 +57,7 @@ class CardDestination extends StatelessWidget {
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          '${Variables.imageStorage}/${event.image}',
+                          '${Variables.imageStorage}/events/${event.image}',
                           width: 160.0,
                           height: 128.0,
                           fit: BoxFit.cover,

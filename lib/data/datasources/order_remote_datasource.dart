@@ -68,6 +68,7 @@ class OrderRemoteDatasource {
       },
     );
     log("Auth Token: ${authData.toJson()}");
+    log("Request URL : ${response.request!.url}");
     log("Status Code: ${response.statusCode}");
     log("Response Body: ${response.body}");
     if (response.statusCode == 200) {

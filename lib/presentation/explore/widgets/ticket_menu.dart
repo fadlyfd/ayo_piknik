@@ -8,7 +8,7 @@ import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 
 class TicketMenu extends StatelessWidget {
-  final TicketModel ticketModel;
+  final TicketEventModel ticketModel;
   final int count;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
@@ -29,7 +29,7 @@ class TicketMenu extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                ticketModel.sku!.name!,
+                ticketModel.sku!.name! + " (${ticketModel.ticketCount})",
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,

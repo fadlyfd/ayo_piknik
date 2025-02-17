@@ -6,6 +6,10 @@ import 'package:flutter_ayo_piknik/core/components/buttons.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/home/blocs/check_ticket/check_ticket_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/home/pages/home_partner_page.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/home/pages/scanner_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TicketStatusPage extends StatelessWidget {
   final bool isSuccess;
@@ -21,12 +25,16 @@ class TicketStatusPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: AppColors.white,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColors.white,
+            ),
+            onPressed: () {
+              context
+                  .read<CheckTicketBloc>()
+                  .add(const CheckTicketEvent.started());
+              context.pushReplacement(const HomePartnerPage());
+            }),
         title: const Text(
           "Ticket Status",
           style: TextStyle(
@@ -80,8 +88,13 @@ class TicketStatusPage extends StatelessWidget {
               height: 48,
               color: isSuccess ? AppColors.primary : AppColors.red,
               onPressed: () {
+                context
+                    .read<CheckTicketBloc>()
+                    .add(const CheckTicketEvent.started());
                 if (isSuccess) {
-                  context.pop();
+                  context.pushReplacement(const HomePartnerPage());
+                } else {
+                  context.push(const ScannerPage());
                 }
               },
               label: isSuccess ? 'Mengerti' : 'Scan Lagi',

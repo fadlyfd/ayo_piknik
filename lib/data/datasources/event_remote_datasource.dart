@@ -91,7 +91,7 @@ class EventRemoteDatasource {
       'Authorization': 'Bearer ${authData.data!.token!}',
     };
     var request = http.MultipartRequest(
-        'POST', Uri.parse('${Variables.baseUrl}/api/event/update/${id}'));
+        'POST', Uri.parse('${Variables.baseUrl}/api/event/update/$id'));
     request.fields.addAll(model.toMap());
     if (model.image != null) {
       request.files

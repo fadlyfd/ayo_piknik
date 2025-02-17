@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
+import 'package:flutter_ayo_piknik/core/components/buttons.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
+import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/presentation/home/pages/home_page.dart';
 
 class SuccessPaymentDialog extends StatelessWidget {
   const SuccessPaymentDialog({super.key});
@@ -37,6 +40,12 @@ class SuccessPaymentDialog extends StatelessWidget {
             ),
             textAlign: TextAlign.justify,
           ),
+          const SpaceHeight(16),
+          Button.filled(
+              onPressed: () {
+                context.pushReplacement(const HomePage());
+              },
+              label: 'Back to Home'),
         ],
       ),
     );

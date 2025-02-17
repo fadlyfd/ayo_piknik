@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter_ayo_piknik/data/datasources/event_remote_datasource.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +11,9 @@ part 'edit_event_bloc.freezed.dart';
 class EditEventBloc extends Bloc<EditEventEvent, EditEventState> {
   final EventRemoteDatasource datasource;
 
-  EditEventBloc(this.datasource) : super(_Initial()) {
+  EditEventBloc(this.datasource) : super(const _Initial()) {
     on<_EditEvent>((event, emit) async {
-      emit(_Loading());
+      emit(const _Loading());
       final result = await datasource.updateEvent(event.model, event.id);
       result.fold((l) {
         emit(_Error(l));

@@ -10,9 +10,11 @@ import 'package:flutter_ayo_piknik/core/utils/format_price.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/destination_order_page.dart';
 
+import '../../../data/models/responses/ticket_response_model.dart';
+
 class CardTicket extends StatelessWidget {
   final EventModel event;
-  final TicketModel ticket;
+  final TicketEventModel ticket;
   const CardTicket({
     super.key,
     required this.event,

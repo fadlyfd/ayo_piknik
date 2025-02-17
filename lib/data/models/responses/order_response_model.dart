@@ -1,5 +1,6 @@
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/login_response_model.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/ticket_response_model.dart';
 
 class OrderResponseModel {
   final String? status;

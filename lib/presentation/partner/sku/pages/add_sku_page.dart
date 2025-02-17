@@ -2,36 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/components/buttons.dart';
 import 'package:flutter_ayo_piknik/core/components/custom_text_field.dart';
-import 'package:flutter_ayo_piknik/core/components/image_picker_widget.dart';
 import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
 import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
-import 'package:flutter_ayo_piknik/data/models/responses/event_category_response_model.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/blocs/event_category/event_category_bloc.dart';
+import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/data/models/requests/create_sku_request_model.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/blocs/create_sku/create_sku_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/blocs/get_skus/get_skus_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddTicketPage extends StatefulWidget {
-  const AddTicketPage({super.key});
+import '../../event/blocs/get_event_user/get_event_user_bloc.dart';
+
+class AddSkuPage extends StatefulWidget {
+  const AddSkuPage({super.key});
 
   @override
-  State<AddTicketPage> createState() => _AddTicketPageState();
+  State<AddSkuPage> createState() => _AddSkuPageState();
 }
 
-class _AddTicketPageState extends State<AddTicketPage> {
+class _AddSkuPageState extends State<AddSkuPage> {
   TextEditingController? nameTicketController;
+  TextEditingController? categoryController;
   TextEditingController? priceController;
   TextEditingController? quotaController;
-  EventCategoryModel? selectEventCategory;
-  String? selectedStatus;
+  EventModel? selectEvent;
+  String? selectedDayType;
 
   @override
   void initState() {
     nameTicketController = TextEditingController();
     priceController = TextEditingController();
+    categoryController = TextEditingController();
     quotaController = TextEditingController();
     context
-        .read<EventCategoryBloc>()
-        .add(const EventCategoryEvent.getEventCategories());
+        .read<GetEventUserBloc>()
+        .add(const GetEventUserEvent.getEventUser());
     super.initState();
   }
 
@@ -40,6 +46,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
     nameTicketController?.dispose();
     priceController?.dispose();
     quotaController?.dispose();
+    categoryController?.dispose();
     super.dispose();
   }
 
@@ -69,9 +76,45 @@ class _AddTicketPageState extends State<AddTicketPage> {
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(18.0),
-          child: Button.filled(
-            onPressed: () {},
-            label: 'Simpan',
+          child: BlocConsumer<CreateSkuBloc, CreateSkuState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                orElse: () {},
+                error: (message) {
+                  context.showSnackBar(message, Colors.red);
+                },
+                success: (message) {
+                  context.showSnackBar(message, AppColors.primary);
+                  context.read<GetSkusBloc>().add(const GetSkusEvent.getSkus());
+                  context.pop();
+                },
+              );
+            },
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () {
+                  return Button.filled(
+                    onPressed: () {
+                      final model = CreateSkuRequestModel(
+                        name: nameTicketController!.text,
+                        category: categoryController!.text,
+                        eventId: selectEvent!.id,
+                        price: int.parse(priceController!.text),
+                        stock: int.parse(quotaController!.text),
+                        dayType: selectedDayType,
+                      );
+                      context
+                          .read<CreateSkuBloc>()
+                          .add(CreateSkuEvent.createSku(model));
+                    },
+                    label: 'Simpan',
+                  );
+                },
+                loading: () {
+                  return const LoadingIndicator();
+                },
+              );
+            },
           ),
         ),
         body: ListView(
@@ -91,15 +134,29 @@ class _AddTicketPageState extends State<AddTicketPage> {
             const SpaceHeight(
               16,
             ),
+            CustomTextField(
+              prefixIcon: Image.asset(
+                Assets.icons.ticket.path,
+                width: 10.0,
+                height: 10.0,
+              ),
+              borderColor: AppColors.grey,
+              showLabel: true,
+              controller: categoryController!,
+              label: 'Kategori',
+            ),
+            const SpaceHeight(
+              16,
+            ),
             const Text(
-              "Kategori Event",
+              "Event",
               style: TextStyle(
                 fontSize: 12,
                 color: AppColors.textBlack2,
               ),
             ),
             const SpaceHeight(6.0),
-            BlocBuilder<EventCategoryBloc, EventCategoryState>(
+            BlocBuilder<GetEventUserBloc, GetEventUserState>(
               builder: (context, state) {
                 return state.maybeWhen(
                   orElse: () {
@@ -109,7 +166,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                     return const LoadingIndicator();
                   },
                   success: (data) {
-                    return DropdownButtonFormField<EventCategoryModel>(
+                    return DropdownButtonFormField<EventModel>(
                       decoration: InputDecoration(
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(12),
@@ -135,18 +192,18 @@ class _AddTicketPageState extends State<AddTicketPage> {
                           color: AppColors.textBlack2,
                         ),
                       ),
-                      value: selectEventCategory,
+                      value: selectEvent,
                       style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.textBlack2,
                       ),
                       onChanged: (newValue) {
                         setState(() {
-                          selectEventCategory = newValue;
+                          selectEvent = newValue;
                         });
                       },
-                      items: data.data!.map((EventCategoryModel option) {
-                        return DropdownMenuItem<EventCategoryModel>(
+                      items: data.data!.map((EventModel option) {
+                        return DropdownMenuItem<EventModel>(
                           value: option,
                           child: Text(option.name!),
                         );
@@ -160,7 +217,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
               16,
             ),
             const Text(
-              "Status",
+              "Jenis Hari",
               style: TextStyle(
                 fontSize: 12,
                 color: AppColors.textBlack2,
@@ -185,26 +242,27 @@ class _AddTicketPageState extends State<AddTicketPage> {
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               ),
               hint: const Text(
-                'Select Status',
+                'Jenis Hari',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.black,
                 ),
               ),
-              value: selectedStatus, // nilai yang dipilih
+              value: selectedDayType, // nilai yang dipilih
               onChanged: (newValue) {
                 setState(() {
-                  selectedStatus = newValue;
+                  selectedDayType = newValue;
                 });
               },
-              items: ['Aktif', 'Tidak Aktif'].map((String option) {
+              items: ['Hari Biasa', 'Akhir Pekan', 'Hari Libur Nasional']
+                  .map((String option) {
                 return DropdownMenuItem<String>(
                   value: option,
                   child: Text(option),
                 );
               }).toList(),
             ),
-            SpaceHeight(16),
+            const SpaceHeight(16),
             CustomTextField(
               prefixIcon: Image.asset(
                 Assets.icons.moneys.path,
@@ -213,6 +271,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
               ),
               borderColor: AppColors.grey,
               showLabel: true,
+              keyboardType: TextInputType.number,
               controller: priceController!,
               label: 'Harga (Rp)',
             ),
@@ -228,6 +287,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
               borderColor: AppColors.grey,
               showLabel: true,
               controller: quotaController!,
+              keyboardType: TextInputType.number,
               label: 'Kuota Tiket',
             ),
             const SpaceHeight(

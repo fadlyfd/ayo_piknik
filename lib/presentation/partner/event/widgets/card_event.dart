@@ -127,7 +127,7 @@ class CardEvent extends StatelessWidget {
                       );
                     },
                     loading: () {
-                      return LoadingIndicator();
+                      return const LoadingIndicator();
                     },
                   );
                 },

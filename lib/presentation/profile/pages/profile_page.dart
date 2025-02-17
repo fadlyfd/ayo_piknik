@@ -7,6 +7,7 @@ import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
 import 'package:flutter_ayo_piknik/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_ayo_piknik/presentation/auth/blocs/logout/logout_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/auth/pages/login_page.dart';
+import 'package:flutter_ayo_piknik/presentation/auth/pages/register_partner_page.dart';
 import 'package:flutter_ayo_piknik/presentation/profile/widgets/item_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -116,6 +117,12 @@ class ProfilePage extends StatelessWidget {
             const ItemMenu(title: "Kebijakan Privasi "),
             const SpaceHeight(4),
             const ItemMenu(title: "Tentang Ayo Piknik"),
+            const SpaceHeight(4),
+            GestureDetector(
+                onTap: () {
+                  context.push(RegisterPartnerPage());
+                },
+                child: const ItemMenu(title: "Gabung jadi Partner Ayo Piknik")),
           ],
         ));
   }

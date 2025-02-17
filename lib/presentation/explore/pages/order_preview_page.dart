@@ -1,6 +1,8 @@
 import 'package:flutter_ayo_piknik/core/extensions/int_ext.dart';
 import 'package:flutter_ayo_piknik/core/components/loading_indicator.dart';
+import 'package:flutter_ayo_piknik/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_ayo_piknik/data/models/requests/create_order_request_model.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/login_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/blocs/create_order/create_order_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
@@ -16,7 +18,6 @@ import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/dialogs/payment_dialog.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/models/payment_option.dart';
-import 'package:flutter_ayo_piknik/presentation/explore/pages/data_customer_page.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/pages/payment_page.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/card_ticket_preview.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/widgets/dashedline.dart';
@@ -24,7 +25,7 @@ import 'package:flutter_ayo_piknik/presentation/explore/widgets/dashedline.dart'
 class OrderPreviewPage extends StatefulWidget {
   final CreateOrderRequestModel model;
   final EventModel event;
-  final TicketModel ticket;
+  final TicketEventModel ticket;
   final int total;
   const OrderPreviewPage({
     super.key,
@@ -41,6 +42,28 @@ class OrderPreviewPage extends StatefulWidget {
 class _OrderPreviewPageState extends State<OrderPreviewPage> {
   PaymentOption? selectedPaymentOption;
   bool isDisable = false;
+  LoginResponseModel? authData;
+  int totalCountTicket = 0;
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    authData = await AuthLocalDatasource().getAuthData();
+    log("Model: ${widget.model.toJson()}");
+    log("Event Model : ${widget.event.toJson()}");
+    log("Ticket Model : ${widget.ticket.toJson()}");
+    log("Total : ${widget.total}");
+    final totalCount = widget.model.orderDetails!.map(
+      (e) {
+        totalCountTicket += e.qty!;
+      },
+    ).toList();
+    setState(() {});
+  }
+
   void showPaymentMethodSheet(BuildContext context) async {
     final result = await showModalBottomSheet<PaymentOption>(
       context: context,
@@ -276,7 +299,7 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
                               ),
                             ),
                             Text(
-                              'Jumlah Ticket: ${widget.model.orderDetails!.length} ',
+                              'Jumlah Ticket: ${totalCountTicket} ',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
@@ -286,7 +309,7 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
                           ],
                         ),
                         Text(
-                          widget.total!.currencyFormatRp,
+                          widget.total.currencyFormatRp,
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
@@ -354,28 +377,31 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
               child: CardTicketPreview(
                 event: widget.event,
                 ticket: widget.ticket,
+                model: widget.model,
               ),
             ),
             _item(
               Assets.icons.profileCircle.path,
-              const Text(
-                "bahri@jagoflutter.com",
-                style: TextStyle(fontSize: 16.0, color: AppColors.grey),
+              Text(
+                authData?.data?.user?.email ?? "-",
+                style: const TextStyle(fontSize: 16.0, color: AppColors.grey),
               ),
             ),
             const SpaceHeight(4),
             _item(
               Assets.icons.personalcard.path,
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Saiful Bahri",
-                    style: TextStyle(fontSize: 16.0, color: AppColors.grey),
+                    authData?.data?.user?.name ?? "-",
+                    style:
+                        const TextStyle(fontSize: 16.0, color: AppColors.grey),
                   ),
                   Text(
-                    "bahri@jagoflutter.com • 0812-3456-7890",
-                    style: TextStyle(fontSize: 14.0, color: AppColors.grey),
+                    "${authData?.data?.user?.email} • ${authData?.data?.user?.phone ?? '-'}",
+                    style:
+                        const TextStyle(fontSize: 14.0, color: AppColors.grey),
                   ),
                 ],
               ),
@@ -424,7 +450,7 @@ class _OrderPreviewPageState extends State<OrderPreviewPage> {
   Widget _item(String image, Widget content) {
     return GestureDetector(
       onTap: () {
-        context.push(const DataCustomerPage());
+        // context.push(const DataCustomerPage());
       },
       child: Container(
         padding: const EdgeInsets.all(16.0),

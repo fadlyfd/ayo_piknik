@@ -5,9 +5,10 @@ import 'package:flutter_ayo_piknik/data/datasources/auth_remote_datasource.dart'
 import 'package:flutter_ayo_piknik/data/datasources/event_category_remote_datasource.dart';
 import 'package:flutter_ayo_piknik/data/datasources/event_remote_datasource.dart';
 import 'package:flutter_ayo_piknik/data/datasources/order_remote_datasource.dart';
+import 'package:flutter_ayo_piknik/data/datasources/sku_remote_datasource.dart';
 import 'package:flutter_ayo_piknik/data/datasources/ticket_remote_datasource.dart';
 import 'package:flutter_ayo_piknik/data/datasources/vendor_remote_datasource.dart';
-import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
+import 'package:flutter_ayo_piknik/presentation/auth/blocs/create_vendor/create_vendor_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/auth/blocs/login/login_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/auth/blocs/logout/logout_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/auth/blocs/register/register_bloc.dart';
@@ -20,8 +21,11 @@ import 'package:flutter_ayo_piknik/presentation/explore/blocs/create_order/creat
 import 'package:flutter_ayo_piknik/presentation/explore/blocs/event/event_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/blocs/event_category/event_category_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/order/blocs/get_orders_user/get_orders_user_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/home/blocs/check_ticket/check_ticket_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/profile_partner/blocs/get_vendor_user/get_vendor_user_bloc.dart';
-import 'package:flutter_ayo_piknik/presentation/partner/ticket/blocs/get_ticket_user/get_ticket_user_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/blocs/create_sku/create_sku_bloc.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/blocs/get_skus/get_skus_bloc.dart';
+
 import 'package:flutter_ayo_piknik/presentation/partner/transaction/blocs/get_orders_vendor/get_orders_vendor_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/transaction/blocs/get_total_orders_vendor/get_total_orders_vendor_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,9 +86,6 @@ class MyApp extends StatelessWidget {
           create: (context) => CreateEventBloc(EventRemoteDatasource()),
         ),
         BlocProvider(
-          create: (context) => GetTicketUserBloc(TicketRemoteDatasource()),
-        ),
-        BlocProvider(
           create: (context) => GetVendorUserBloc(VendorRemoteDataSource()),
         ),
         BlocProvider(
@@ -92,6 +93,18 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DeleteEventBloc(EventRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => GetSkusBloc(SkuRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => CreateSkuBloc(SkuRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => CheckTicketBloc(TicketRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => CreateVendorBloc(VendorRemoteDataSource()),
         ),
       ],
       child: MaterialApp(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ayo_piknik/core/assets/assets.gen.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
+import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
 import 'package:flutter_ayo_piknik/presentation/home/widgets/nav_item.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/home/pages/scanner_page.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/transaction/pages/transaction_partner_page.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/profile_partner/pages/profile_partner_page.dart';
 import 'package:flutter_svg/svg.dart';
@@ -35,7 +37,9 @@ class _HomePartnerPageState extends State<HomePartnerPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         shape: const StadiumBorder(),
-        onPressed: () {},
+        onPressed: () {
+          context.push(const ScannerPage());
+        },
         child: SvgPicture.asset(
           Assets.icons.scan.path,
           colorFilter: const ColorFilter.mode(

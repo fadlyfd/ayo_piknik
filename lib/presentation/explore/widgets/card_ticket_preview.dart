@@ -6,16 +6,21 @@ import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/constants/variabels.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
+import 'package:flutter_ayo_piknik/core/utils/datetime_utils.dart';
+import 'package:flutter_ayo_piknik/data/models/requests/create_order_request_model.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
+import 'package:flutter_ayo_piknik/data/models/responses/ticket_response_model.dart';
 
 class CardTicketPreview extends StatelessWidget {
   final EventModel event;
-  final TicketModel ticket;
+  final CreateOrderRequestModel model;
+  final TicketEventModel? ticket;
   const CardTicketPreview({
-    super.key,
+    Key? key,
     required this.event,
-    required this.ticket,
-  });
+    required this.model,
+    this.ticket,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class CardTicketPreview extends StatelessWidget {
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          '${Variables.imageStorage}/${event.image}',
+                          '${Variables.imageStorage}/events/${event.image}',
                           width: 65.0,
                           height: 65.0,
                           fit: BoxFit.cover,
@@ -61,7 +66,7 @@ class CardTicketPreview extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${ticket.sku!.name}: 1",
+                        "Ticket: ${model.orderDetails!.length}",
                         style: const TextStyle(
                           fontSize: 16.0,
                           color: AppColors.grey,
@@ -82,14 +87,15 @@ class CardTicketPreview extends StatelessWidget {
                   bottomLeft: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                 )),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.info_outline, size: 20, color: AppColors.primary),
-                SpaceWidth(8),
+                const Icon(Icons.info_outline,
+                    size: 20, color: AppColors.primary),
+                const SpaceWidth(8),
                 Text(
-                  'Valid Pada : 24 Desember 2024',
-                  style: TextStyle(
+                  'Valid Pada : ${DateTimeUtils.formatDateToYMD(model.eventDate!)}',
+                  style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.primary,
                   ),

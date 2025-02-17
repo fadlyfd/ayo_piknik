@@ -20,15 +20,14 @@ import 'package:flutter_ayo_piknik/data/models/responses/event_category_response
 import 'package:flutter_ayo_piknik/data/models/responses/event_response_model.dart';
 import 'package:flutter_ayo_piknik/data/models/responses/login_response_model.dart';
 import 'package:flutter_ayo_piknik/presentation/explore/blocs/event_category/event_category_bloc.dart';
-import 'package:flutter_ayo_piknik/presentation/partner/event/blocs/create_event/create_event_bloc.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/event/blocs/get_event_user/get_event_user_bloc.dart';
 
 class EditEventPage extends StatefulWidget {
   final EventModel event;
   const EditEventPage({
-    Key? key,
+    super.key,
     required this.event,
-  }) : super(key: key);
+  });
 
   @override
   State<EditEventPage> createState() => _EditEventPageState();

@@ -4,7 +4,7 @@ import 'package:flutter_ayo_piknik/core/components/spaces.dart';
 import 'package:flutter_ayo_piknik/core/constants/colors.dart';
 import 'package:flutter_ayo_piknik/core/extensions/build_context_ext.dart';
 import 'package:flutter_ayo_piknik/presentation/partner/event/pages/event_managemnet_page.dart';
-import 'package:flutter_ayo_piknik/presentation/partner/ticket/pages/ticket_partner_page.dart';
+import 'package:flutter_ayo_piknik/presentation/partner/sku/pages/sku_partner_page.dart';
 import 'package:flutter_ayo_piknik/presentation/profile/pages/status_account_page.dart';
 
 class DashboardPartnerPage extends StatelessWidget {
@@ -47,7 +47,7 @@ class DashboardPartnerPage extends StatelessWidget {
             Expanded(
                 child: _item(context, Assets.icons.ticketExpired.path,
                     "Ticket Management", () {
-              context.push(const TicketPartnerPage());
+              context.push(const SkuPartnerPage());
             })),
           ],
         ),
@@ -77,6 +77,7 @@ class DashboardPartnerPage extends StatelessWidget {
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -86,12 +87,14 @@ class DashboardPartnerPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             const SpaceHeight(10),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
-                color: AppColors.black,
+            Center(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.black,
+                ),
               ),
             ),
           ],
