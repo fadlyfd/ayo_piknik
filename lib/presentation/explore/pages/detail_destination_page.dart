@@ -106,7 +106,7 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
                     color: AppColors.primary,
                   ),
                 ),
-                const SpaceHeight(8),
+                /* const SpaceHeight(8),
                 RichText(
                   text: const TextSpan(
                     children: [
@@ -130,7 +130,7 @@ class _DetailDestinationPageState extends State<DetailDestinationPage> {
                       ),
                     ],
                   ),
-                ),
+                ), */
                 const SpaceHeight(10),
                 Row(
                   children: [
