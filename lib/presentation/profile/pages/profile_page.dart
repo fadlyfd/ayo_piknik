@@ -93,7 +93,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   const SpaceHeight(24),
                   const Text(
-                    "Saiful Bahri",
+                    "Nama User",
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -101,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    "bahri@jagoflutter.com",
+                    "user@gmail.com",
                     style: TextStyle(
                       fontSize: 14.0,
                       color: AppColors.white,

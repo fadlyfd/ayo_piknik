@@ -66,12 +66,12 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   _onItemTapped(1);
                 }),
-            NavItem(
+            /* NavItem(
               iconPath: Assets.icons.save.path,
               label: 'Simpan',
               isActive: _selectedIndex == 2,
               onTap: () => _onItemTapped(2),
-            ),
+            ), */
             NavItem(
               iconPath: Assets.icons.profile.path,
               label: 'Profile',

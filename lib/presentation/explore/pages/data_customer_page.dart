@@ -19,8 +19,8 @@ class _DataCustomerPageState extends State<DataCustomerPage> {
 
   @override
   void initState() {
-    nameController = TextEditingController(text: 'Saiful Bahri');
-    emailController = TextEditingController(text: 'bahri@jagoflutter.com');
+    nameController = TextEditingController(text: 'Nama User');
+    emailController = TextEditingController(text: 'user@gmail.com');
     phoneConroller = TextEditingController(text: '0812-3456-7890');
     super.initState();
   }
