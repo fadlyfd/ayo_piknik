@@ -178,7 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SpaceHeight(16),
-                Row(
+                /*   Row(
                   children: [
                     Container(
                       width: 14,
@@ -203,6 +203,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     )
                   ],
                 ),
+               */
                 const SpaceHeight(32),
                 BlocConsumer<RegisterBloc, RegisterState>(
                   listener: (context, state) {
@@ -239,7 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 const SpaceHeight(16),
-                const Row(
+/*                 const Row(
                   children: [
                     Expanded(
                       child: Divider(
@@ -263,9 +264,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ],
-                ),
+                ), 
                 const SpaceHeight(16),
-                OutlinedButton(
+                 OutlinedButton(
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -298,7 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SpaceWidth(10)
                     ],
                   ),
-                ),
+                ), */
                 const SpaceHeight(32),
                 Center(
                   child: GestureDetector(
