@@ -268,7 +268,7 @@ class _DestinationOrderState extends State<DestinationOrder> {
               },
             ),
           ),
-          const SpaceHeight(16),
+          /*    const SpaceHeight(16),
           const Center(
             child: Text(
               "Voucer bisa dipakai pada",
@@ -289,6 +289,7 @@ class _DestinationOrderState extends State<DestinationOrder> {
               ),
             ),
           ),
+          */
           const SpaceHeight(
             16,
           ),
